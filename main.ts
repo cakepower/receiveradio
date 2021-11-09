@@ -103,7 +103,4 @@ basic.forever(function () {
     strip.clear()
     huskylens.request()
     doSomething(huskylens.readBox_s(Content3.ID))
-    // strip.rotate(1)
-    strip.show()
-    basic.pause(500)
 })
