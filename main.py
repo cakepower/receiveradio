@@ -1,14 +1,20 @@
 def on_received_number(receivedNumber):
+    strip.clear()
     if receivedNumber == 1:
-        basic.show_number(1)
+        doONE()
+        strip.show()
     elif receivedNumber == 2:
-        basic.show_number(2)
+        doTWO()
+        strip.show()
     elif receivedNumber == 3:
-        basic.show_number(3)
+        doTHREE()
+        strip.show()
     elif receivedNumber == 4:
-        basic.show_number(4)
+        doFOUR()
+        strip.show()
     elif receivedNumber == 5:
-        basic.show_number(5)
+        doFIVE()
+        strip.show()
     else:
         pass
 radio.on_received_number(on_received_number)
@@ -66,7 +72,7 @@ def doONE():
     strip.set_matrix_color(2, 3, neopixel.colors(NeoPixelColors.ORANGE))
     strip.set_matrix_color(2, 4, neopixel.colors(NeoPixelColors.ORANGE))
 strip: neopixel.Strip = None
-strip = neopixel.create(DigitalPin.P13, 8, NeoPixelMode.RGB)
+strip = neopixel.create(DigitalPin.P13, 25, NeoPixelMode.RGB)
 huskylens.init_i2c()
 huskylens.init_mode(protocolAlgorithm.ALGORITHM_TAG_RECOGNITION)
 strip.set_matrix_width(5)
@@ -74,5 +80,24 @@ strip.set_brightness(30)
 radio.set_group(34)
 
 def on_forever():
-    pass
+    strip.clear()
+    huskylens.request()
+    doSomething(huskylens.readBox_s(Content3.ID))
+    # strip.rotate(1)
+    strip.show()
+    basic.pause(500)
 basic.forever(on_forever)
+
+def doSomething(num: number):
+    if num == 1:
+        strip.show_color(neopixel.colors(NeoPixelColors.RED))
+    elif num == 2:
+        strip.show_color(neopixel.colors(NeoPixelColors.ORANGE))
+    elif num == 3:
+        strip.show_color(neopixel.colors(NeoPixelColors.BLUE))
+    elif num == 4:
+        strip.show_color(neopixel.colors(NeoPixelColors.VIOLET))
+    elif num == 5:
+        strip.show_color(neopixel.colors(NeoPixelColors.WHITE))
+    else:
+        strip.clear()
